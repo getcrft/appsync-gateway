@@ -1,6 +1,7 @@
 {
   "name": "@crft/appsync-gateway",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "source": "src/index.ts",
   "main": "dist/index.js",
