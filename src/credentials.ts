@@ -14,29 +14,50 @@ export function getAWSDate() {
   }
 }
 
+export function signRequest(request, credentials) {
+  const signer = new (<any>AWS).Signers.V4(request, 'appsync', true);
+  signer.addAuthorization(credentials, getAWSDate());
+}
+
+export class GlobalCredentialsStrategy implements CredentialsStrategy {
+  async sign(httpRequest: AWS.HttpRequest) {
+    return signRequest(httpRequest, AWS.config.credentials);
+  }
+}
+
 export class IAMCredentialsStrategy implements CredentialsStrategy {
   private credentials: AWS.Credentials;
 
-  constructor() {
+  constructor(
+    key: string = null,
+    accessKey: string = null,
+    session: string = null,
+    // region: string = null
+  ) {
     console.log('IAM signer');
 
+    key = key || env.AWS_ACCESS_KEY_ID;
+    accessKey = accessKey || env.AWS_SECRET_ACCESS_KEY;
+    session = session || env.AWS_SESSION_TOKEN;
+    // region = session || env.AWS_REGION || env.REGION;
+
     this.credentials = new AWS.Credentials(
-      env.AWS_ACCESS_KEY_ID,
-      env.AWS_SECRET_ACCESS_KEY,
-      env.AWS_SESSION_TOKEN
+      key,
+      accessKey,
+      session
     );
 
+    /*
     // Authenticate as lambda - needed?
     AWS.config.update({
-      region: env.AWS_REGION,
+      region,
       credentials: this.credentials
     });
+    */
   }
 
   async sign(httpRequest: AWS.HttpRequest) {
-    const creds = this.credentials;
-    const signer = new (<any>AWS).Signers.V4(httpRequest, 'appsync', true);
-    signer.addAuthorization(creds, getAWSDate());
+    return signRequest(httpRequest, this.credentials);
   }
 }
 

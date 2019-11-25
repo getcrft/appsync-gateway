@@ -14,13 +14,16 @@ type GraphQLBody = {
 
 export class GraphQLGateway {
   private uri: URL.UrlWithStringQuery;
+  private region: string;
 
   constructor(
     private credentialsStrategy: CredentialsStrategy,
-    url: string = null
+    url: string = null,
+    region: string = null
   ) {
     url = url || env.API_API_GRAPHQLAPIENDPOINTOUTPUT;
     this.uri = URL.parse(url);
+    this.region = region || env.REGION;
   }
 
   async runQuery(body: GraphQLBody) {
@@ -29,7 +32,7 @@ export class GraphQLGateway {
 
       // Reference: https://aws-amplify.github.io/docs/cli-toolchain/quickstart#graphql-from-lambda
       const endpoint = new AWS.Endpoint(uri.href);
-      const httpRequest = new AWS.HttpRequest(endpoint, env.AWS_REGION);
+      const httpRequest = new AWS.HttpRequest(endpoint, this.region);
 
       httpRequest.headers.host = uri.host;
       httpRequest.headers['Content-Type'] = 'application/json';
