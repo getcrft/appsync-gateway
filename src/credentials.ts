@@ -21,7 +21,12 @@ export function signRequest(request, credentials) {
 
 export class GlobalCredentialsStrategy implements CredentialsStrategy {
   async sign(httpRequest: AWS.HttpRequest) {
-    return signRequest(httpRequest, AWS.config.credentials);
+    return new Promise<any>((resolve, reject) => {
+      (<any>AWS).config.credentials.get(err => {
+        if (err) reject(err);
+        resolve(signRequest(httpRequest, AWS.config.credentials));
+      });
+    })
   }
 }
 
