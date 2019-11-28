@@ -21,12 +21,7 @@ export function signRequest(request, credentials) {
 
 export class GlobalCredentialsStrategy implements CredentialsStrategy {
   async sign(httpRequest: AWS.HttpRequest) {
-    return new Promise<any>((resolve, reject) => {
-      (<any>AWS).config.credentials.get(err => {
-        if (err) reject(err);
-        resolve(signRequest(httpRequest, AWS.config.credentials));
-      });
-    })
+    return signRequest(httpRequest, AWS.config.credentials);
   }
 }
 
@@ -37,14 +32,14 @@ export class IAMCredentialsStrategy implements CredentialsStrategy {
     key: string = null,
     accessKey: string = null,
     session: string = null,
-    // region: string = null
+    region: string = null
   ) {
     console.log('IAM signer');
 
     key = key || env.AWS_ACCESS_KEY_ID;
     accessKey = accessKey || env.AWS_SECRET_ACCESS_KEY;
     session = session || env.AWS_SESSION_TOKEN;
-    // region = session || env.AWS_REGION || env.REGION;
+    region = session || env.AWS_REGION || env.REGION;
 
     this.credentials = new AWS.Credentials(
       key,
@@ -52,13 +47,10 @@ export class IAMCredentialsStrategy implements CredentialsStrategy {
       session
     );
 
-    /*
-    // Authenticate as lambda - needed?
     AWS.config.update({
       region,
       credentials: this.credentials
     });
-    */
   }
 
   async sign(httpRequest: AWS.HttpRequest) {
