@@ -65,3 +65,11 @@ export class AuthHeaderCredentialsStrategy implements CredentialsStrategy {
     httpRequest.headers['authorization'] = this.authHeader;
   }
 }
+
+export class APIKeyCredentialsStrategy implements CredentialsStrategy {
+  constructor(private apiKey: string) {}
+
+  async sign(httpRequest: AWS.HttpRequest) {
+    httpRequest.headers['x-api-key'] = this.apiKey;
+  }
+}
