@@ -4,12 +4,19 @@ import URL from 'url';
 import AWS from 'aws-sdk';
 import { CredentialsStrategy } from './credentials';
 
-type GraphQLBody = {
+type GraphQLBody<TInput = any> = {
   operationName: string;
   query: string;
-  variables: {
-    [key: string]: any;
-  };
+  variables: TInput;
+};
+
+type GraphQLResult<T> = {
+  data?: T;
+  errors?: any[];
+};
+
+type GraphQLOptions = {
+  ignoreErrors?: boolean;
 };
 
 export class GraphQLGateway {
@@ -26,7 +33,9 @@ export class GraphQLGateway {
     this.region = region || env.REGION;
   }
 
-  async runQuery(body: GraphQLBody) {
+  async runQuery<TResult, TInput>(body: GraphQLBody, options: GraphQLOptions= { ignoreErrors: false }) {
+    let result: GraphQLResult<TResult>;
+
     try {
       const uri = this.uri;
 
@@ -38,9 +47,6 @@ export class GraphQLGateway {
       httpRequest.headers['Content-Type'] = 'application/json';
       httpRequest.method = 'POST';
       httpRequest.body = JSON.stringify(body);
-      // httpRequest.headers['authorization'] = process.env.AUTH_TOKEN;
-
-      console.info('Posting:', httpRequest.body);
 
       await this.credentialsStrategy.sign(httpRequest);
 
@@ -50,13 +56,19 @@ export class GraphQLGateway {
         headers: httpRequest.headers
       });
 
-      const json = await res.json();
-      console.info('Response:', JSON.stringify(json, null, 2));
-
-      return json.data;
+      result = await res.json();
     } catch (err) {
-      console.error('GraphQL Error:', JSON.stringify(err, null, 2));
       throw err;
     }
+
+    if (!options.ignoreErrors && result.errors && result.errors.length) {
+      throw new Error(
+        `GraphQL Errors[${body.operationName}]: ${JSON.stringify(
+          result.errors
+        )}`
+      );
+    }
+
+    return result.data;
   }
 }
