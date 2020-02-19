@@ -1,10 +1,4 @@
-<p align="center">
-  <img src="https://github.com/getcrft/crft-ui/raw/master/src/assets/svg/logo-dark.svg?sanitize=true" width="350">
-  <br />
-  API Gateway Utils
-</p>
-
----
+# Appsync API Gateway
 
 Utility method for making API calls to AppSync from Lambdas in AWS.
 

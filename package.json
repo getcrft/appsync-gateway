@@ -1,10 +1,11 @@
 {
   "name": "@crft/appsync-gateway",
-  "version": "1.0.5",
-  "description": "",
+  "version": "1.0.6",
+  "description": "Utility method for making API calls to AppSync from Lambdas in AWS.",
   "source": "src/index.ts",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "private": false,
   "scripts": {
     "build": "tsc"
   },
@@ -12,8 +13,18 @@
     "type": "git",
     "url": "git+https://github.com/getcrft/appsync-gateway.git"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "aws",
+    "aws-amplify",
+    "amplify",
+    "lambda",
+    "appsync"
+  ],
+  "maintainers": [
+    "Austin McDaniel"
+  ],
+  "author": "CRFT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/getcrft/appsync-gateway/issues"
   },
