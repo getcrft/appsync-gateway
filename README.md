@@ -6,6 +6,14 @@ This library essentially implements the suggested approach outlined by [AWS Ampl
 
 ## Usage
 
+Install via NPM: 
+
+```
+npm i @crft/appsync-gateway --save
+```
+
+then use like:
+
 ```ts
 const {
   GraphQLGateway,
