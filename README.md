@@ -36,8 +36,18 @@ const gateway = new GraphQLGateway(
   process.env.API_API_GRAPHQLAPIENDPOINTOUTPUT
 );
 
+const myQuery = `
+  query ListTodosOperation {
+    listTodos {
+      items {
+        title
+      }
+    }
+  }
+`;
+
 await gateway.runQuery({
-  operationName: 'MyOperationName',
+  operationName: 'ListTodosOperation',
   query: myQuery,
   variables: {
     input: {}
