@@ -1,6 +1,6 @@
 {
   "name": "@crft/appsync-gateway",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Utility method for making API calls to AppSync from Lambdas in AWS.",
   "source": "src/index.ts",
   "main": "dist/index.js",
