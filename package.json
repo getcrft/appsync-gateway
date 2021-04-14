@@ -1,6 +1,6 @@
 {
   "name": "@crft/appsync-gateway",
-  "version": "1.0.8",
+  "version": "2.0.0",
   "description": "Utility method for making API calls to AppSync from Lambdas in AWS.",
   "source": "src/index.ts",
   "main": "dist/index.js",
@@ -30,11 +30,14 @@
   },
   "homepage": "https://github.com/getcrft/appsync-gateway#readme",
   "dependencies": {
-    "aws-sdk": "^2.578.0",
     "node-fetch": "^2.6.0"
+  },
+  "peerDependencies": {
+    "aws-sdk": "^2.578.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.12",
+    "aws-sdk": "^2.578.0",
     "typescript": "^3.7.2"
   }
 }
