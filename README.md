@@ -9,7 +9,7 @@ This library essentially implements the suggested approach outlined by [AWS Ampl
 Install via NPM: 
 
 ```
-npm i @crft/appsync-gateway --save
+npm i @getcrft/appsync-gateway --save
 ```
 
 then use like:
@@ -20,7 +20,7 @@ const {
   IAMCredentialsStrategy,
   APIKeyCredentialsStrategy,
   AuthHeaderCredentialsStrategy
-} = require('@crft/appsync-gateway');
+} = require('@getcrft/appsync-gateway');
 
 // IAM Mode
 const creds = new IAMCredentialsStrategy();
