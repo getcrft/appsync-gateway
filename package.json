@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/getcrft/appsync-gateway#readme",
   "dependencies": {
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.7"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
