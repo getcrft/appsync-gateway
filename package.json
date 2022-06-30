@@ -36,11 +36,11 @@
     "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
-    "aws-sdk": "^2.578.0"
+    "aws-sdk": "^2.814.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.12",
-    "aws-sdk": "^2.578.0",
+    "aws-sdk": "^2.814.0",
     "typescript": "^3.7.2"
   }
 }
